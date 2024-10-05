@@ -184,18 +184,20 @@ const MortgageCalculator: React.FC = () => {
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
           </label>
-          <ToggleSwitch
-            leftLabel="Reduce Installments"
-            rightLabel="Reduce Term"
-            checked={reduceInstallments}
-            onChange={setReduceInstallments}
-          />
-          <ToggleSwitch
-            leftLabel="Show yearly"
-            rightLabel="Show monthly"
-            checked={showYearlySums}
-            onChange={setShowYearlySums}
-          />
+          <div className="space-y-1">
+            <ToggleSwitch
+              leftLabel="Reduce Term"
+              rightLabel="Reduce Installments amount"
+              checked={reduceInstallments}
+              onChange={setReduceInstallments}
+            />
+            <ToggleSwitch
+              leftLabel="Show monthly"
+              rightLabel="Show yearly"
+              checked={showYearlySums}
+              onChange={setShowYearlySums}
+            />
+          </div>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">Totals</h2>

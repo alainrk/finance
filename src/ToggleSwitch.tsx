@@ -14,7 +14,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   onChange,
 }) => {
   return (
-    <div className="flex items-center justify-center space-x-4">
+    <div className="flex  space-x-2">
       <span
         className={`text-sm ${checked ? "text-gray-500" : "text-gray-900 font-medium"}`}
       >
