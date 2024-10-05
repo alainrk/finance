@@ -50,6 +50,16 @@ const MortgageCalculator: React.FC = () => {
   const [showYearlySums, setShowYearlySums] = useState<boolean>(false);
   const [mortgageData, setMortgageData] = useState<PaymentData[]>([]);
 
+  const formatAxisLabel = (value: number): string => {
+    if (value >= 1000000) {
+      return `${(value / 1000000).toFixed(1)}M`;
+    } else if (value >= 1000) {
+      return `${(value / 1000).toFixed(1)}K`;
+    } else {
+      return value.toFixed(0);
+    }
+  };
+
   useEffect(() => {
     calculateMortgage();
   }, [amount, interestRate, years, additionalPayment, reduceInstallments]);
@@ -224,10 +234,29 @@ const MortgageCalculator: React.FC = () => {
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Payment Chart</h2>
         <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={getChartData()}>
-            <XAxis dataKey={showYearlySums ? "monthName" : "month"} />
-            <YAxis tickFormatter={formatNumber} />
-            <Tooltip formatter={(value: number) => formatNumber(value)} />
+          <BarChart
+            data={getChartData()}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <XAxis
+              dataKey={showYearlySums ? "monthName" : "month"}
+              angle={-45}
+              textAnchor="end"
+              height={60}
+              interval={showYearlySums ? 0 : "preserveStartEnd"}
+            />
+            <YAxis tickFormatter={formatAxisLabel} width={80} />
+            <Tooltip
+              formatter={(value: number) => formatNumber(value)}
+              labelFormatter={(label) =>
+                showYearlySums ? label : `Month ${label}`
+              }
+            />
             <Legend />
             <Bar
               dataKey="interest"
@@ -243,7 +272,7 @@ const MortgageCalculator: React.FC = () => {
             />
             <Bar dataKey="extraPayment" fill="#ffc658" name="Extra Payment" />
           </BarChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer>{" "}
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Payment Schedule</h2>
