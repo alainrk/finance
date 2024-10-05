@@ -11,11 +11,35 @@ import {
 
 interface PaymentData {
   month: number;
+  monthName: string;
   interest: number;
   principal: number;
   extraPayment: number;
   balance: number;
+  totalPayment: number;
 }
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const formatNumber = (num: number): string => {
+  return num.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
 
 const MortgageCalculator: React.FC = () => {
   const [amount, setAmount] = useState<number>(200000);
@@ -23,6 +47,7 @@ const MortgageCalculator: React.FC = () => {
   const [years, setYears] = useState<number>(30);
   const [additionalPayment, setAdditionalPayment] = useState<number>(0);
   const [reduceInstallments, setReduceInstallments] = useState<boolean>(true);
+  const [showYearlySums, setShowYearlySums] = useState<boolean>(false);
   const [mortgageData, setMortgageData] = useState<PaymentData[]>([]);
 
   useEffect(() => {
@@ -32,7 +57,7 @@ const MortgageCalculator: React.FC = () => {
   const calculateMortgage = () => {
     const monthlyRate = interestRate / 100 / 12;
     const numberOfPayments = years * 12;
-    const monthlyPayment =
+    let monthlyPayment =
       (amount * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) /
       (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
 
@@ -41,11 +66,20 @@ const MortgageCalculator: React.FC = () => {
 
     for (let month = 1; month <= numberOfPayments; month++) {
       const interest = balance * monthlyRate;
-      const principal = monthlyPayment - interest;
+      let principal = monthlyPayment - interest;
 
       let extraPayment = 0;
       if (month % 12 === 0) {
         extraPayment = additionalPayment;
+      }
+
+      if (reduceInstallments && month > 12 && additionalPayment > 0) {
+        // Recalculate monthly payment
+        const remainingMonths = numberOfPayments - month + 1;
+        monthlyPayment =
+          (balance * monthlyRate * Math.pow(1 + monthlyRate, remainingMonths)) /
+          (Math.pow(1 + monthlyRate, remainingMonths) - 1);
+        principal = monthlyPayment - interest;
       }
 
       balance -= principal + extraPayment;
@@ -54,16 +88,47 @@ const MortgageCalculator: React.FC = () => {
 
       data.push({
         month,
+        monthName: monthNames[(month - 1) % 12],
         interest: interest,
         principal: principal,
         extraPayment: extraPayment,
         balance: balance,
+        totalPayment: principal + interest + extraPayment,
       });
 
       if (balance === 0) break;
     }
 
     setMortgageData(data);
+  };
+
+  const getChartData = () => {
+    if (!showYearlySums) return mortgageData;
+
+    const yearlyData: PaymentData[] = [];
+    for (let i = 0; i < mortgageData.length; i += 12) {
+      const yearData = mortgageData.slice(i, i + 12);
+      const yearSum: PaymentData = {
+        month: yearData[0].month,
+        monthName: `Year ${Math.floor(yearData[0].month / 12) + 1}`,
+        interest: yearData.reduce((sum, payment) => sum + payment.interest, 0),
+        principal: yearData.reduce(
+          (sum, payment) => sum + payment.principal,
+          0,
+        ),
+        extraPayment: yearData.reduce(
+          (sum, payment) => sum + payment.extraPayment,
+          0,
+        ),
+        balance: yearData[yearData.length - 1].balance,
+        totalPayment: yearData.reduce(
+          (sum, payment) => sum + payment.totalPayment,
+          0,
+        ),
+      };
+      yearlyData.push(yearSum);
+    }
+    return yearlyData;
   };
 
   return (
@@ -117,48 +182,66 @@ const MortgageCalculator: React.FC = () => {
             />
             Reduce Installments (vs. Reduce Term)
           </label>
+          <label className="block mb-2">
+            <input
+              type="checkbox"
+              checked={showYearlySums}
+              onChange={(e) => setShowYearlySums(e.target.checked)}
+              className="mr-2"
+            />
+            Show Yearly Sums
+          </label>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">Totals</h2>
           <p>
             Total Payments:{" "}
-            {mortgageData
-              .reduce(
-                (sum, payment) =>
-                  sum +
-                  payment.interest +
-                  payment.principal +
-                  payment.extraPayment,
+            {formatNumber(
+              mortgageData.reduce(
+                (sum, payment) => sum + payment.totalPayment,
                 0,
-              )
-              .toFixed(2)}
+              ),
+            )}
           </p>
           <p>
             Total Interest:{" "}
-            {mortgageData
-              .reduce((sum, payment) => sum + payment.interest, 0)
-              .toFixed(2)}
+            {formatNumber(
+              mortgageData.reduce((sum, payment) => sum + payment.interest, 0),
+            )}
           </p>
-          <p>Total Principal: {amount}</p>
+          <p>Total Principal: {formatNumber(amount)}</p>
           <p>
             Total Extra Payments:{" "}
-            {mortgageData
-              .reduce((sum, payment) => sum + payment.extraPayment, 0)
-              .toFixed(2)}
+            {formatNumber(
+              mortgageData.reduce(
+                (sum, payment) => sum + payment.extraPayment,
+                0,
+              ),
+            )}
           </p>
         </div>
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Payment Chart</h2>
         <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={mortgageData}>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
+          <BarChart data={getChartData()}>
+            <XAxis dataKey={showYearlySums ? "monthName" : "month"} />
+            <YAxis tickFormatter={formatNumber} />
+            <Tooltip formatter={(value: number) => formatNumber(value)} />
             <Legend />
-            <Bar dataKey="interest" stackId="a" fill="#8884d8" />
-            <Bar dataKey="principal" stackId="a" fill="#82ca9d" />
-            <Bar dataKey="extraPayment" fill="#ffc658" />
+            <Bar
+              dataKey="interest"
+              stackId="a"
+              fill="#8884d8"
+              name="Interest"
+            />
+            <Bar
+              dataKey="principal"
+              stackId="a"
+              fill="#82ca9d"
+              name="Principal"
+            />
+            <Bar dataKey="extraPayment" fill="#ffc658" name="Extra Payment" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -172,6 +255,7 @@ const MortgageCalculator: React.FC = () => {
                 <th className="px-4 py-2">Interest</th>
                 <th className="px-4 py-2">Principal</th>
                 <th className="px-4 py-2">Extra Payment</th>
+                <th className="px-4 py-2">Total Payment</th>
                 <th className="px-4 py-2">Balance</th>
               </tr>
             </thead>
@@ -181,13 +265,20 @@ const MortgageCalculator: React.FC = () => {
                   key={index}
                   className={index % 2 === 0 ? "bg-gray-100" : ""}
                 >
-                  <td className="px-4 py-2">{payment.month}</td>
-                  <td className="px-4 py-2">{payment.interest.toFixed(2)}</td>
-                  <td className="px-4 py-2">{payment.principal.toFixed(2)}</td>
+                  <td className="px-4 py-2">{`${payment.month} (${payment.monthName})`}</td>
                   <td className="px-4 py-2">
-                    {payment.extraPayment.toFixed(2)}
+                    {formatNumber(payment.interest)}
                   </td>
-                  <td className="px-4 py-2">{payment.balance.toFixed(2)}</td>
+                  <td className="px-4 py-2">
+                    {formatNumber(payment.principal)}
+                  </td>
+                  <td className="px-4 py-2">
+                    {formatNumber(payment.extraPayment)}
+                  </td>
+                  <td className="px-4 py-2">
+                    {formatNumber(payment.totalPayment)}
+                  </td>
+                  <td className="px-4 py-2">{formatNumber(payment.balance)}</td>
                 </tr>
               ))}
             </tbody>
