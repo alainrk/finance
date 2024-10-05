@@ -297,12 +297,6 @@ const MortgageCalculator: React.FC = () => {
               interval={showYearlySums ? 0 : "preserveStartEnd"}
             />
             <YAxis tickFormatter={formatAxisLabel} width={80} />
-            <Tooltip
-              formatter={(value: number) => formatNumber(value)}
-              labelFormatter={(label) =>
-                showYearlySums ? label : `Month ${label}`
-              }
-            />
             <Legend />
             <Tooltip content={<CustomTooltip />} />
             <Bar
