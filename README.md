@@ -1,50 +1,67 @@
-# React + TypeScript + Vite
+# Mortgage Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <img src="public/favicon.svg" alt="Mortgage Calculator Logo" width="200" height="200">
+</p>
 
-Currently, two official plugins are available:
+This is a Mortgage Calculator to calculate and visualize mortgage payments over time using the [Equated monthly installment](https://en.wikipedia.org/wiki/Equated_monthly_installment).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Key features include:
 
-## Expanding the ESLint configuration
+- 🧮 Calculate monthly mortgage payments
+- 📊 Visualize the breakdown of principal and interest over time
+- 💰 Adjust for additional payments and see their impact
+- 🔄 Toggle between reducing loan term or monthly payments
+- 📈 Interactive charts and detailed payment schedules
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## ⚠️ Disclaimer
 
-- Configure the top-level `parserOptions` property like this:
+🚨 **Important: Please Read** 🚨
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This Mortgage Calculator is provided for informational and educational purposes only. While we strive for accuracy, we cannot guarantee that the information and calculations are error-free or suitable for your specific circumstances.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- 🏦 This tool is not a replacement for professional financial advice.
+- 📊 The calculations may not account for all factors that a bank or financial institution would consider.
+- 🐛 Despite our best efforts, the tool may contain bugs or inaccuracies.
+- 📈 Mortgage rates and terms can vary widely and change frequently.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Always consult with a qualified financial advisor, mortgage professional, or your bank before making any financial decisions or commitments related to a mortgage.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+By using this tool, you acknowledge that you understand and accept these limitations and risks.
+
+## Try It Out
+
+You can use the live version of this Mortgage Calculator [here](https://mortgage.alaindichiappari.dev/).
+
+## Development Setup
+
+To set up this project for development on your local machine, follow these steps:
+
+1. **Clone the repository**
+
+   ```
+   git clone https://github.com/alainrk/mortgage.git
+   cd mortgage
+   ```
+
+2. **Install dependencies**
+
+   ```
+   npm install
+   ```
+
+3. **Start the development server**
+
+   ```
+   npm start
+   ```
+
+   This will run the app in development mode. Open the local URL showed to view it in your browser.
+
+## Contributing
+
+Contributions to the Mortgage Calculator project are welcome! Please feel free to submit pull requests, create issues or spread the word.
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
