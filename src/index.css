@@ -1,3 +1,23 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* Custom styles for the toggle switch */
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #3b82f6;
+}
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #3b82f6;
+}
+.toggle-checkbox {
+  left: 0;
+  transition: all 0.3s;
+}
+.toggle-checkbox:checked {
+  right: 0;
+  left: auto;
+}
+.toggle-label {
+  transition: background-color 0.3s;
+}

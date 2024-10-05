@@ -8,6 +8,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import ToggleSwitch from "./ToggleSwitch";
 
 interface PaymentData {
   month: number;
@@ -183,24 +184,18 @@ const MortgageCalculator: React.FC = () => {
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
           </label>
-          <label className="block mb-2">
-            <input
-              type="checkbox"
-              checked={reduceInstallments}
-              onChange={(e) => setReduceInstallments(e.target.checked)}
-              className="mr-2"
-            />
-            Reduce Installments (vs. Reduce Term)
-          </label>
-          <label className="block mb-2">
-            <input
-              type="checkbox"
-              checked={showYearlySums}
-              onChange={(e) => setShowYearlySums(e.target.checked)}
-              className="mr-2"
-            />
-            Show Yearly Sums
-          </label>
+          <ToggleSwitch
+            leftLabel="Reduce Installments"
+            rightLabel="Reduce Term"
+            checked={reduceInstallments}
+            onChange={setReduceInstallments}
+          />
+          <ToggleSwitch
+            leftLabel="Show yearly"
+            rightLabel="Show monthly"
+            checked={showYearlySums}
+            onChange={setShowYearlySums}
+          />
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">Totals</h2>
