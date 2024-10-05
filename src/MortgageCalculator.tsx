@@ -46,9 +46,9 @@ const MortgageCalculator: React.FC = () => {
   const [amount, setAmount] = useState<number>(200000);
   const [interestRate, setInterestRate] = useState<number>(3);
   const [years, setYears] = useState<number>(30);
-  const [additionalPayment, setAdditionalPayment] = useState<number>(0);
+  const [additionalPayment, setAdditionalPayment] = useState<number>(1000);
   const [reduceInstallments, setReduceInstallments] = useState<boolean>(true);
-  const [showYearlySums, setShowYearlySums] = useState<boolean>(false);
+  const [showYearlySums, setShowYearlySums] = useState<boolean>(true);
   const [mortgageData, setMortgageData] = useState<PaymentData[]>([]);
 
   const formatAxisLabel = (value: number): string => {
@@ -151,6 +151,7 @@ const MortgageCalculator: React.FC = () => {
             Loan Amount:
             <input
               type="number"
+              step={5000}
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -179,18 +180,21 @@ const MortgageCalculator: React.FC = () => {
             Additional Annual Payment:
             <input
               type="number"
+              step={1000}
               value={additionalPayment}
               onChange={(e) => setAdditionalPayment(Number(e.target.value))}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
           </label>
           <div className="space-y-1">
-            <ToggleSwitch
-              leftLabel="Reduce Term"
-              rightLabel="Reduce Installments amount"
-              checked={reduceInstallments}
-              onChange={setReduceInstallments}
-            />
+            {additionalPayment > 0 && (
+              <ToggleSwitch
+                leftLabel="Reduce Term"
+                rightLabel="Reduce Installments amount"
+                checked={reduceInstallments}
+                onChange={setReduceInstallments}
+              />
+            )}
             <ToggleSwitch
               leftLabel="Show monthly"
               rightLabel="Show yearly"
