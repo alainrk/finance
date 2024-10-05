@@ -21,3 +21,11 @@
 .toggle-label {
   transition: background-color 0.3s;
 }
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+thead th {
+  background-color: #f9fafb; /* This should match the bg-gray-50 color */
+}
