@@ -1,7 +1,7 @@
 # Mortgage Calculator
 
 <p align="center">
-  <img src="public/favicon.svg" alt="Mortgage Calculator Logo" width="200" height="200">
+  <img src="public/icon.svg" alt="Mortgage Calculator Logo" width="200" height="200">
 </p>
 
 This is a Mortgage Calculator to calculate and visualize mortgage payments over time using the [Equated monthly installment](https://en.wikipedia.org/wiki/Equated_monthly_installment).
