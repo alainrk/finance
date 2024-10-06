@@ -1,10 +1,10 @@
-# Mortgage Calculator
+# Mortgage Simulator
 
 <p align="center">
   <img src="public/icon.svg" alt="Mortgage Calculator Logo" width="200" height="200">
 </p>
 
-This is a Mortgage Calculator to calculate and visualize mortgage payments over time using the [Equated monthly installment](https://en.wikipedia.org/wiki/Equated_monthly_installment).
+This is a Mortgage Calculator and Simulator to calculate and visualize mortgage payments over time using the [Equated monthly installment](https://en.wikipedia.org/wiki/Equated_monthly_installment).
 
 Key features include:
 
@@ -18,7 +18,7 @@ Key features include:
 
 🚨 **Important: Please Read** 🚨
 
-This Mortgage Calculator is provided for informational and educational purposes only. While we strive for accuracy, we cannot guarantee that the information and calculations are error-free or suitable for your specific circumstances.
+This Mortgage Simulator is provided for informational and educational purposes only. While we strive for accuracy, we cannot guarantee that the information and calculations are error-free or suitable for your specific circumstances.
 
 - 🏦 This tool is not a replacement for professional financial advice.
 - 📊 The calculations may not account for all factors that a bank or financial institution would consider.
