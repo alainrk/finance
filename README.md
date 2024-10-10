@@ -1,7 +1,7 @@
 # Financial Simulators
 
 <p align="center">
-  <img src="public/icon.svg" alt="Mortgage Calculator Logo" width="200" height="200">
+  <img src="public/icon.svg" alt="Logo" width="200" height="200">
 </p>
 
 This application provides two powerful financial tools: a Mortgage Simulator and a Rent vs Buy Comparison simulator. These tools help users make informed decisions about their housing options.
@@ -56,8 +56,8 @@ To set up this project for development on your local machine, follow these steps
 1. **Clone the repository**
 
    ```
-   git clone https://github.com/alainrk/mortgage.git
-   cd mortgage
+   git clone https://github.com/alainrk/finance.git
+   cd finance
    ```
 
 2. **Install dependencies**
@@ -69,14 +69,14 @@ To set up this project for development on your local machine, follow these steps
 3. **Start the development server**
 
    ```
-   npm start
+   npm run dev
    ```
 
    This will run the app in development mode. Open the local URL showed to view it in your browser.
 
 ## Contributing
 
-Contributions to the Mortgage Calculator project are welcome! Please feel free to submit pull requests, create issues or spread the word.
+Contributions to this project are welcome! Please feel free to submit pull requests, create issues or spread the word.
 
 ## License
 
