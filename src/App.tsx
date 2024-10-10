@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-2 flex flex-col items-center sm:py-4">
       <h1 className="text-4xl font-bold text-center mb-6 text-gray-800">
-        Financial Calculator
+        Financial Calculators
       </h1>
 
       <div className="w-full max-w-md px-2 sm:px-0">
@@ -29,8 +29,8 @@ const App: React.FC = () => {
               setActiveTab(e.target.value as "mortgage" | "comparison")
             }
           >
-            <option value="mortgage">Mortgage Calculator</option>
-            <option value="comparison">Rent vs Buy Comparison</option>
+            <option value="mortgage">Mortgage Scenarios Simulator</option>
+            <option value="comparison">Rent vs Buy vs Mortage Simulator</option>
           </select>
         </div>
         <div className="hidden sm:block">
@@ -43,7 +43,7 @@ const App: React.FC = () => {
                   : "text-gray-500 hover:text-gray-700"
               } px-4 py-2 font-medium text-sm rounded-md transition-colors duration-150`}
             >
-              Mortgage Calculator
+              Mortgage Scenarios Simulator
             </button>
             <button
               onClick={() => setActiveTab("comparison")}
@@ -53,7 +53,7 @@ const App: React.FC = () => {
                   : "text-gray-500 hover:text-gray-700"
               } px-4 py-2 font-medium text-sm rounded-md transition-colors duration-150`}
             >
-              Rent vs Buy Comparison
+              Rent vs Buy vs Mortage Simulator
             </button>
           </nav>
         </div>
