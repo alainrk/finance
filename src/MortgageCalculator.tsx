@@ -40,10 +40,9 @@ const monthNames = [
   "December",
 ];
 
-const formatNumber = (num: number): string => {
+const formatNumber = (num: number, decimals = 2): string => {
   return num.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    maximumFractionDigits: decimals,
   });
 };
 
@@ -257,12 +256,14 @@ const MortgageCalculator: React.FC = () => {
                 (sum, payment) => sum + payment.totalPayment,
                 0,
               ),
+              0,
             )}
           </p>
           <p>
             Total Interest:{" "}
             {formatNumber(
               mortgageData.reduce((sum, payment) => sum + payment.interest, 0),
+              0,
             )}
           </p>
           <p>Total Principal: {formatNumber(amount)}</p>
@@ -273,6 +274,7 @@ const MortgageCalculator: React.FC = () => {
                 (sum, payment) => sum + payment.extraPayment,
                 0,
               ),
+              0,
             )}
           </p>
         </div>
