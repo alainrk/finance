@@ -34,7 +34,7 @@ Key features include:
 
 🚨 **Important: Please Read** 🚨
 
-These Financial Calculators are provided for informational and educational purposes only. While we strive for accuracy, we cannot guarantee that the information and calculations are error-free or suitable for your specific circumstances.
+These Financial Calculators are provided for informational and educational purposes only. Although I tried to make them as accurate as possible, there is no guarantee that the information and calculations are error-free or suitable for your specific circumstances.
 
 - 🏦 These tools are not a replacement for professional financial advice.
 - 📊 The calculations may not account for all factors that a bank or financial institution would consider.
