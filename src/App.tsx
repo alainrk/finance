@@ -11,9 +11,9 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <header className="sticky top-0 z-10 bg-transparent p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="w-8 h-8"></div>{" "}
+      <header className="sticky top-0 z-10 bg-gray-100 shadow-sm">
+        <div className="container mx-auto flex justify-between items-center p-4">
+          <div className="w-8 h-8"></div>
           <h1 className="text-2xl font-bold text-gray-800 absolute left-1/2 transform -translate-x-1/2">
             Financial Calculators
           </h1>
@@ -40,59 +40,61 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 xl:px-16 max-w-7xl">
-        <div className="sm:hidden mb-2">
-          <label htmlFor="tabs" className="sr-only">
-            Select a tab
-          </label>
-          <select
-            id="tabs"
-            name="tabs"
-            className="block w-full pl-3 pr-10 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-            value={activeTab}
-            onChange={(e) =>
-              setActiveTab(e.target.value as "mortgage" | "comparison")
-            }
-          >
-            <option value="mortgage">Mortgage Scenarios Simulator</option>
-            <option value="comparison">
-              Rent vs Buy vs Mortgage Simulator
-            </option>
-          </select>
-        </div>
-        <div className="hidden sm:block">
-          <nav className="flex justify-center space-x-4" aria-label="Tabs">
-            <button
-              onClick={() => setActiveTab("mortgage")}
-              className={`${
-                activeTab === "mortgage"
-                  ? "bg-indigo-100 text-indigo-700"
-                  : "text-gray-500 hover:text-gray-700"
-              } flex-1 px-4 py-2 font-medium text-sm sm:text-base md:text-lg rounded-md transition-colors duration-150 text-center`}
+      <main className="flex-grow flex flex-col items-center pt-4">
+        <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 xl:px-16 max-w-7xl">
+          <div className="sm:hidden mb-2">
+            <label htmlFor="tabs" className="sr-only">
+              Select a tab
+            </label>
+            <select
+              id="tabs"
+              name="tabs"
+              className="block w-full pl-3 pr-10 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              value={activeTab}
+              onChange={(e) =>
+                setActiveTab(e.target.value as "mortgage" | "comparison")
+              }
             >
-              Mortgage Scenarios Simulator
-            </button>
-            <button
-              onClick={() => setActiveTab("comparison")}
-              className={`${
-                activeTab === "comparison"
-                  ? "bg-indigo-100 text-indigo-700"
-                  : "text-gray-500 hover:text-gray-700"
-              } flex-1 px-4 py-2 font-medium text-sm sm:text-base md:text-lg rounded-md transition-colors duration-150 text-center`}
-            >
-              Rent vs Buy vs Mortgage Simulator
-            </button>
-          </nav>
+              <option value="mortgage">Mortgage Scenarios Simulator</option>
+              <option value="comparison">
+                Rent vs Buy vs Mortgage Simulator
+              </option>
+            </select>
+          </div>
+          <div className="hidden sm:block mb-4">
+            <nav className="flex justify-center space-x-4" aria-label="Tabs">
+              <button
+                onClick={() => setActiveTab("mortgage")}
+                className={`${
+                  activeTab === "mortgage"
+                    ? "bg-indigo-100 text-indigo-700"
+                    : "text-gray-500 hover:text-gray-700"
+                } flex-1 px-4 py-2 font-medium text-sm sm:text-base md:text-lg rounded-md transition-colors duration-150 text-center`}
+              >
+                Mortgage Scenarios Simulator
+              </button>
+              <button
+                onClick={() => setActiveTab("comparison")}
+                className={`${
+                  activeTab === "comparison"
+                    ? "bg-indigo-100 text-indigo-700"
+                    : "text-gray-500 hover:text-gray-700"
+                } flex-1 px-4 py-2 font-medium text-sm sm:text-base md:text-lg rounded-md transition-colors duration-150 text-center`}
+              >
+                Rent vs Buy vs Mortgage Simulator
+              </button>
+            </nav>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-4 w-full px-2 sm:px-4 md:px-6 lg:px-8 xl:px-16 max-w-7xl">
-        {activeTab === "mortgage" ? (
-          <MortgageCalculator />
-        ) : (
-          <RentBuyComparison />
-        )}
-      </div>
+        <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 xl:px-16 max-w-7xl">
+          {activeTab === "mortgage" ? (
+            <MortgageCalculator />
+          ) : (
+            <RentBuyComparison />
+          )}
+        </div>
+      </main>
     </div>
   );
 };
