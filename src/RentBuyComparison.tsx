@@ -383,7 +383,7 @@ const ProjectionTable: React.FC<TableProps> = ({
               Buying Cash
             </th>
             <th scope="col" className="px-6 py-3">
-              Buying (Down Pay:{" "}
+              Mortgage (Down Pay:{" "}
               {formatEUR(
                 (params.downPaymentPercentage * params.houseValue) / 100,
               )}
