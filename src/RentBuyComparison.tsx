@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import InfoTooltip from "./InfoTooltip";
 import {
   LineChart,
   Line,
@@ -114,6 +115,31 @@ const paramLabels: { [key in keyof Params]: string } = {
   homeInsurance: "Home Insurance (Annual)",
   maintenanceRate: "Maintenance Rate (year %)",
   downPaymentPercentage: "House Down Payment (%)",
+};
+
+// Tooltip descriptions for each parameter
+const paramTooltips: { [key in keyof Params]: string } = {
+  initialInvestment:
+    "Total money you have available to invest or use as a down payment on a house.",
+  houseValue:
+    "The current market value of the house you're considering purchasing.",
+  monthlySavings:
+    "Amount of money you can save or invest each month after all expenses.",
+  investmentReturn:
+    "Expected annual percentage return on your investments (stocks, bonds, etc.).",
+  houseAppreciation:
+    "Expected annual percentage increase in the value of the house.",
+  mortgageRate:
+    "Annual interest rate on your mortgage loan, fixed for the entire term.",
+  mortgageYears: "Duration of the mortgage loan in years.",
+  monthlyRent: "Current monthly cost to rent a comparable property.",
+  rentIncrease: "Expected annual percentage increase in rent costs.",
+  propertyTaxRate: "Annual property tax as a percentage of the house value.",
+  homeInsurance: "Annual cost to insure the home against damage and liability.",
+  maintenanceRate:
+    "Annual cost of home maintenance as a percentage of house value.",
+  downPaymentPercentage:
+    "Percentage of the house value you'll pay upfront when purchasing.",
 };
 
 const NetWorthProjectionComponent: React.FC = () => {
@@ -292,7 +318,10 @@ const NetWorthProjectionComponent: React.FC = () => {
             {(Object.keys(params) as Array<keyof Params>).map((key) => (
               <div key={key} className="relative">
                 <label className="block mb-2">
-                  {paramLabels[key]}:
+                  <div className="flex items-center">
+                    {paramLabels[key]}:
+                    <InfoTooltip text={paramTooltips[key]} />
+                  </div>
                   <input
                     type="number"
                     step={steps[key]}
@@ -308,7 +337,10 @@ const NetWorthProjectionComponent: React.FC = () => {
         </div>
       </div>
       <div>
-        <h2 className="my-2 text-xl font-semibold mb-2">Projection Details</h2>
+        <h2 className="my-2 text-xl font-semibold mb-2 flex items-center">
+          Projection Details
+          <InfoTooltip text="Detailed financial comparison between the three scenarios at different time points." />
+        </h2>
         <ProjectionTable
           projections={projections}
           params={params}
@@ -316,8 +348,9 @@ const NetWorthProjectionComponent: React.FC = () => {
         />
       </div>
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-2">
+        <h2 className="text-xl font-semibold mb-2 flex items-center">
           Net Worth Projection Chart
+          <InfoTooltip text="Visual comparison of your net worth over time under different housing scenarios." />
         </h2>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ToggleSwitch from "./ToggleSwitch";
+import InfoTooltip from "./InfoTooltip";
 import {
   BarChart,
   Bar,
@@ -186,7 +187,10 @@ const MortgageCalculator: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block mb-2">
-            Loan Amount:
+            <div className="flex items-center">
+              Loan Amount:
+              <InfoTooltip text="The total amount of money you're borrowing from the lender to purchase your home." />
+            </div>
             <input
               type="number"
               step={5000}
@@ -197,7 +201,10 @@ const MortgageCalculator: React.FC = () => {
             />
           </label>
           <label className="block mb-2">
-            Interest Rate (%):
+            <div className="flex items-center">
+              Interest Rate (%):
+              <InfoTooltip text="The annual interest rate on your mortgage, expressed as a percentage. This is the cost of borrowing the principal loan amount." />
+            </div>
             <input
               type="number"
               value={interestRate}
@@ -208,7 +215,10 @@ const MortgageCalculator: React.FC = () => {
             />
           </label>
           <label className="block mb-2">
-            Loan Term (years):
+            <div className="flex items-center">
+              Loan Term (years):
+              <InfoTooltip text="The length of time you have to repay the loan in full. Common mortgage terms are 15, 20, or 30 years." />
+            </div>
             <input
               type="number"
               value={years}
@@ -219,7 +229,10 @@ const MortgageCalculator: React.FC = () => {
             />
           </label>
           <label className="block mb-2">
-            Additional Annual Payment:
+            <div className="flex items-center">
+              Additional Annual Payment:
+              <InfoTooltip text="Extra money paid toward your mortgage principal once per year. Making additional payments can help reduce the total interest paid and shorten your loan term." />
+            </div>
             <input
               type="number"
               step={1000}
@@ -231,55 +244,89 @@ const MortgageCalculator: React.FC = () => {
           </label>
           <div className="space-y-1">
             {additionalPayment > 0 && (
-              <ToggleSwitch
-                leftLabel="Reduce Term"
-                rightLabel="Reduce Installments amount"
-                checked={reduceInstallments}
-                onChange={setReduceInstallments}
-              />
+              <div className="flex items-center">
+                <ToggleSwitch
+                  leftLabel="Reduce Term"
+                  rightLabel="Reduce Installments amount"
+                  checked={reduceInstallments}
+                  onChange={setReduceInstallments}
+                />
+                <InfoTooltip
+                  text={`"Reduce Term" keeps your monthly payment the same but shortens the loan duration. "Reduce Installments" recalculates to lower your monthly payments while maintaining the original term.`}
+                  position="right"
+                />
+              </div>
             )}
-            <ToggleSwitch
-              leftLabel="Show monthly"
-              rightLabel="Show yearly"
-              checked={showYearlySums}
-              onChange={setShowYearlySums}
-            />
+            <div className="flex items-center">
+              <ToggleSwitch
+                leftLabel="Show monthly"
+                rightLabel="Show yearly"
+                checked={showYearlySums}
+                onChange={setShowYearlySums}
+              />
+              <InfoTooltip
+                text="Toggle between showing monthly payment details or yearly aggregated values in the chart and table."
+                position="right"
+              />
+            </div>
           </div>
         </div>
         <div>
-          <h2 className="text-xl font-semibold mb-2">Totals</h2>
-          <p>
-            Total Payments:{" "}
-            {formatNumber(
-              mortgageData.reduce(
-                (sum, payment) => sum + payment.totalPayment,
+          <h2 className="text-xl font-semibold mb-2 flex items-center">
+            Totals
+            <InfoTooltip text="Summary of all payments over the life of the loan." />
+          </h2>
+          <p className="flex items-center">
+            Total Payments:
+            <InfoTooltip text="The sum of all payments (principal, interest, and extra payments) over the life of the loan." />
+            <span className="ml-1">
+              {formatNumber(
+                mortgageData.reduce(
+                  (sum, payment) => sum + payment.totalPayment,
+                  0,
+                ),
                 0,
-              ),
-              0,
-            )}
+              )}
+            </span>
           </p>
-          <p>
-            Total Interest:{" "}
-            {formatNumber(
-              mortgageData.reduce((sum, payment) => sum + payment.interest, 0),
-              0,
-            )}
-          </p>
-          <p>Total Principal: {formatNumber(amount)}</p>
-          <p>
-            Total Extra Payments:{" "}
-            {formatNumber(
-              mortgageData.reduce(
-                (sum, payment) => sum + payment.extraPayment,
+          <p className="flex items-center">
+            Total Interest:
+            <InfoTooltip text="The total amount paid in interest over the life of the loan. This is the cost of borrowing." />
+            <span className="ml-1">
+              {formatNumber(
+                mortgageData.reduce(
+                  (sum, payment) => sum + payment.interest,
+                  0,
+                ),
                 0,
-              ),
-              0,
-            )}
+              )}
+            </span>
+          </p>
+          <p className="flex items-center">
+            Total Principal:
+            <InfoTooltip text="The original loan amount that you borrowed." />
+            <span className="ml-1">{formatNumber(amount)}</span>
+          </p>
+          <p className="flex items-center">
+            Total Extra Payments:
+            <InfoTooltip text="The sum of all additional payments made toward the principal throughout the loan term." />
+            <span className="ml-1">
+              {formatNumber(
+                mortgageData.reduce(
+                  (sum, payment) => sum + payment.extraPayment,
+                  0,
+                ),
+                0,
+              )}
+            </span>
           </p>
         </div>
       </div>
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-2">Payment Chart</h2>
+        <h2 className="text-xl font-semibold mb-2 flex items-center">
+          Payment Chart
+          <InfoTooltip text="Visual representation of your mortgage payments over time, showing the breakdown between principal, interest, and extra payments." />
+        </h2>
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
             data={getChartData()}
@@ -317,7 +364,10 @@ const MortgageCalculator: React.FC = () => {
         </ResponsiveContainer>
       </div>
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-2">Payment Schedule</h2>
+        <h2 className="text-xl font-semibold mb-2 flex items-center">
+          Payment Schedule
+          <InfoTooltip text="Detailed breakdown of each payment throughout the loan term, showing how much goes to interest, principal, and your remaining balance after each payment." />
+        </h2>
         <div className="overflow-x-auto">
           <div className="max-h-96 overflow-y-auto">
             <table className="min-w-full bg-white">
